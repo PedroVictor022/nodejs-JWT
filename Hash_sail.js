@@ -34,3 +34,7 @@ class Usuario {
 const u1 = new Usuario('Jose', 'jose123456');
 console.log(u1);
 u1.auth('Jose', 'jose123456');
+
+const u2 = new Usuario('Jose', 'jose12909123456');
+console.log(u2);
+u2.auth('Jose', 'jose123456');
