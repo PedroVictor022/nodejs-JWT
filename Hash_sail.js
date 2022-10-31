@@ -12,7 +12,25 @@ class Usuario {
       this.nome = nome;
       [this.sec, this.hash] = hashMoreSecurity(senha).split(':')
    }
+
+   auth(nome, senha) {
+      if(nome === this.nome) {
+         const verifyHash = scryptSync(senha, this.sec, 64);
+         const hashReal = Buffer.from(this.hash, 'hex');
+
+         const hashsVerify = timingSafeEqual(verifyHash, hashReal);
+         if(hashsVerify) {
+            console.log('Usuario autenticado')
+            return true;
+         }else {
+            console.log('Usuario nao identificado!')
+            return false;
+         }
+
+      }
+   }
 }
 
 const u1 = new Usuario('Jose', 'jose123456');
 console.log(u1);
+u1.auth('Jose', 'jose123456');
