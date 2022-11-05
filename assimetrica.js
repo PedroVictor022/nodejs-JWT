@@ -1,4 +1,4 @@
-import {generateKeyPairSync} from "crypto";
+import {generateKeyPairSync, publicEncrypt, privateDecrypt} from "crypto";
 
 const { privateKey, publicKey } = generateKeyPairSync('rsa', {
    modulusLength: 2048,
@@ -12,5 +12,14 @@ const { privateKey, publicKey } = generateKeyPairSync('rsa', {
    }
 });
 
-console.log(publicKey);
-console.log(privateKey)
+const dadosCriptografados = publicEncrypt(
+   publicKey, 
+   Buffer.from('Encriypt messager!')
+)
+
+console.log(dadosCriptografados.toString('hex'));
+
+// ------------ TRANSMISSAO --------------
+const dadosDecifrados = privateDecrypt(privateKey, dadosCriptografados);
+
+console.log(`Dados ${dadosDecifrados.toString('utf-8')}`);
